@@ -1,0 +1,28 @@
+:root {
+    --sketchPadWidth: 500px;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sketch-pad {
+    width: var(--sketchPadWidth);
+    padding: 0px;
+    border: 2px solid rgb(53, 53, 53);
+    display: grid;
+}
+
+.tile {
+    border: 1px solid rgb(92, 92, 92)
+}
