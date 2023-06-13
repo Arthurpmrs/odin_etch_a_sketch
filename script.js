@@ -5,7 +5,7 @@ const elements = {
 }
 
 var parameters = {
-    sideSize: 20,
+    sideSize: 32,
     sketchPadWidth: 660
 }
 
@@ -27,7 +27,17 @@ function generateSketchPad(parameters, elements) {
     for (let i = 0; i < numberOfTiles; i++) {
         const tile = document.createElement("div");
         tile.classList.add("tile");
+        tile.addEventListener("mouseover", function () {
+            applyCollor("grey");
+        })
         elements.sketchPad.appendChild(tile);
+    }
+}
+
+function applyCollor(color) {
+    if (this.event.buttons == 1) {
+        const tile = this.event.target;
+        tile.style.backgroundColor = color;
     }
 }
 
