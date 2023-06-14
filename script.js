@@ -50,6 +50,34 @@ const colors = {
     }
 }
 
+const config = {
+    sizeButton: document.querySelector("#sketch-pad-size"),
+    resetButton: document.querySelector("#reset"),
+    setup: function () {
+        this.sizeButton.addEventListener("click", e => {
+
+            while (true) {
+                let inputedValue = prompt("Insert sketch pad side size (between 10 and 100): ");
+                console.log(inputedValue)
+                if (inputedValue === null) {
+                    break;
+                }
+                if (inputedValue >= 10 && inputedValue <= 100) {
+                    parameters.sideSize = inputedValue;
+                    break;
+                }
+            }
+            elements.sketchPad.innerHTML = "";
+            setSketchPadWidth(elements.root, parameters.sketchPadWidth)
+            generateSketchPad(parameters, elements)
+        });
+
+        this.resetButton.addEventListener("click", () => {
+            resetSketchPad(elements);
+        })
+    }
+}
+
 function setSketchPadWidth(root, width) {
     root.style.setProperty("--sketchPadWidth", `${width}px`)
 }
@@ -71,6 +99,9 @@ function generateSketchPad(parameters, elements) {
         tile.addEventListener("mouseover", function () {
             applyCollor(tools, colors);
         })
+        tile.addEventListener("mousedown", function () {
+            applyCollor(tools, colors);
+        })
         elements.sketchPad.appendChild(tile);
     }
 }
@@ -88,7 +119,15 @@ function applyCollor(tools, colors) {
     }
 }
 
+function resetSketchPad(elements) {
+    const tiles = elements.sketchPad.querySelectorAll(".tile");
+    tiles.forEach(tile => {
+        tile.style.backgroundColor = "transparent";
+    })
+}
+
 setSketchPadWidth(elements.root, parameters.sketchPadWidth)
 generateSketchPad(parameters, elements)
 tools.setup()
 colors.setup()
+config.setup()
