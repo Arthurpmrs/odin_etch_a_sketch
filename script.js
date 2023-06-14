@@ -9,6 +9,29 @@ var parameters = {
     sketchPadWidth: 660
 }
 
+const tools = {
+    currentTool: this.pencil,
+    pencil: document.querySelector("#pencil"),
+    eraser: document.querySelector("#eraser"),
+    setupTools: function () {
+        this.pencil.addEventListener("click", e => {
+            if (this.currentTool != e.currentTarget) {
+                this.currentTool.classList.remove("is-active");
+                this.currentTool = e.currentTarget;
+                this.currentTool.classList.add("is-active");
+            }
+        })
+
+        this.eraser.addEventListener("click", e => {
+            if (this.currentTool != e.currentTarget) {
+                this.currentTool.classList.remove("is-active");
+                this.currentTool = e.currentTarget;
+                this.currentTool.classList.add("is-active");
+            }
+        })
+    }
+}
+
 function setSketchPadWidth(root, width) {
     root.style.setProperty("--sketchPadWidth", `${width}px`)
 }
@@ -28,14 +51,20 @@ function generateSketchPad(parameters, elements) {
         const tile = document.createElement("div");
         tile.classList.add("tile");
         tile.addEventListener("mouseover", function () {
-            applyCollor("grey");
+            applyCollor(tools);
         })
         elements.sketchPad.appendChild(tile);
     }
 }
 
-function applyCollor(color) {
+function applyCollor(tools) {
     if (this.event.buttons == 1) {
+        let color;
+        if (tools.currentTool.id === "pencil") {
+            color = "grey";
+        } else {
+            color = "transparent";
+        }
         const tile = this.event.target;
         tile.style.backgroundColor = color;
     }
@@ -43,3 +72,4 @@ function applyCollor(color) {
 
 setSketchPadWidth(elements.root, parameters.sketchPadWidth)
 generateSketchPad(parameters, elements)
+tools.setupTools()
