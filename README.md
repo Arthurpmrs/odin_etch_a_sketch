@@ -1,2 +1,3 @@
-# odin_etch_a_sketch
+# The Odin Project: Etch-a-sketch
+
 Etch a sketch exercice from TheOdinProject.com
