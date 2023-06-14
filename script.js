@@ -5,7 +5,7 @@ const elements = {
 }
 
 var parameters = {
-    sideSize: 32,
+    sideSize: 20,
     sketchPadWidth: 660
 }
 
@@ -13,7 +13,7 @@ const tools = {
     currentTool: this.pencil,
     pencil: document.querySelector("#pencil"),
     eraser: document.querySelector("#eraser"),
-    setupTools: function () {
+    setup: function () {
         this.pencil.addEventListener("click", e => {
             if (this.currentTool != e.currentTarget) {
                 this.currentTool.classList.remove("is-active");
@@ -29,6 +29,24 @@ const tools = {
                 this.currentTool.classList.add("is-active");
             }
         })
+    }
+}
+
+const colors = {
+    currentColor: document.querySelector(".color#black"),
+    colorElements: document.querySelectorAll(".color"),
+    setup: function () {
+        this.colorElements.forEach(ele => {
+            ele.addEventListener("click", e => {
+                this.currentColor.classList.remove("is-active");
+                this.currentColor = e.currentTarget;
+                this.currentColor.classList.add("is-active");
+            })
+        })
+    },
+    getCurrentColor: function () {
+        style = window.getComputedStyle(this.currentColor);
+        return style.getPropertyValue('background-color');
     }
 }
 
@@ -51,17 +69,17 @@ function generateSketchPad(parameters, elements) {
         const tile = document.createElement("div");
         tile.classList.add("tile");
         tile.addEventListener("mouseover", function () {
-            applyCollor(tools);
+            applyCollor(tools, colors);
         })
         elements.sketchPad.appendChild(tile);
     }
 }
 
-function applyCollor(tools) {
+function applyCollor(tools, colors) {
     if (this.event.buttons == 1) {
         let color;
         if (tools.currentTool.id === "pencil") {
-            color = "grey";
+            color = colors.getCurrentColor();
         } else {
             color = "transparent";
         }
@@ -72,4 +90,5 @@ function applyCollor(tools) {
 
 setSketchPadWidth(elements.root, parameters.sketchPadWidth)
 generateSketchPad(parameters, elements)
-tools.setupTools()
+tools.setup()
+colors.setup()
