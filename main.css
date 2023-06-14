@@ -132,5 +132,10 @@ button.outline.is-active svg {
 }
 
 .tile {
-    border: 1px solid rgb(92, 92, 92)
+    border: 1px solid rgb(92, 92, 92);
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
